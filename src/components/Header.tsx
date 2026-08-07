@@ -121,18 +121,6 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               <button
-                onClick={() => setActiveTab('projects')}
-                className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
-                  activeTab === 'projects'
-                    ? 'bg-white text-black font-semibold shadow'
-                    : 'text-white/50 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <FolderKanban className="w-3.5 h-3.5" />
-                <span>{lang === 'tr' ? 'Projeler' : 'Projects'}</span>
-              </button>
-
-              <button
                 onClick={() => setActiveTab('cv')}
                 className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
                   activeTab === 'cv'
@@ -142,6 +130,18 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>{lang === 'tr' ? 'Özgeçmiş (CV)' : 'Resume (CV)'}</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab('projects')}
+                className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
+                  activeTab === 'projects'
+                    ? 'bg-white text-black font-semibold shadow'
+                    : 'text-white/50 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <FolderKanban className="w-3.5 h-3.5" />
+                <span>{lang === 'tr' ? 'Projeler' : 'Projects'}</span>
               </button>
             </nav>
 

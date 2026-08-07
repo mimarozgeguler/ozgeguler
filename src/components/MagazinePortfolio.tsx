@@ -310,7 +310,7 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
 
     return (
       <div 
-        className={`relative w-full h-full bg-[#151515] overflow-hidden select-none flex flex-col justify-between group/card ${
+        className={`relative w-full h-full bg-white overflow-hidden select-none flex flex-col justify-between group/card ${
           zoomLevel > 1 ? 'cursor-zoom-out' : 'cursor-zoom-in'
         }`}
         onDoubleClick={handleDoubleClick}
@@ -727,7 +727,7 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
               dragElastic={0.06}
               style={{ scale: zoomLevel }}
               transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-              className={`relative max-w-6xl xl:max-w-7xl w-full aspect-[16/5] sm:aspect-[3.2/1] bg-[#121212] rounded-sm border border-white/10 shadow-2xl shadow-black flex overflow-hidden ring-1 ring-white/10 ${
+              className={`relative max-w-6xl xl:max-w-7xl w-full aspect-[16/5] sm:aspect-[3.2/1] bg-white rounded-sm border border-white/20 shadow-2xl shadow-black flex overflow-hidden ring-1 ring-white/10 ${
                 zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : ''
               }`}
             >
@@ -888,7 +888,7 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
               }}
               dragElastic={0.06}
               style={{ scale: zoomLevel }}
-              className={`relative max-w-5xl w-full aspect-[16/10] bg-[#121212] rounded-sm border border-white/10 shadow-2xl shadow-black overflow-hidden ring-1 ring-white/10 ${
+              className={`relative max-w-5xl w-full aspect-[16/10] bg-white rounded-sm border border-white/20 shadow-2xl shadow-black overflow-hidden ring-1 ring-white/10 ${
                 zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : ''
               }`}
             >
