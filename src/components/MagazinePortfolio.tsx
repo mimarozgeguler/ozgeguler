@@ -310,7 +310,7 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
 
     return (
       <div 
-        className={`relative w-full h-full bg-white overflow-hidden select-none flex flex-col justify-between group/card ${
+        className={`relative w-full h-full bg-[#111111] overflow-hidden select-none flex flex-col justify-between group/card ${
           zoomLevel > 1 ? 'cursor-zoom-out' : 'cursor-zoom-in'
         }`}
         onDoubleClick={handleDoubleClick}
@@ -331,12 +331,12 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
         }}
       >
         {src ? (
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full flex items-center justify-center">
             <img
               src={src}
               alt={`Portfolyo Sayfa ${pageNum}`}
               onError={() => handleImageError(pageNum)}
-              className="w-full h-full object-cover object-center pointer-events-none"
+              className={`w-full h-full object-contain ${imgAlignment} pointer-events-none`}
               loading="eager"
             />
             
