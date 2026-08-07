@@ -660,18 +660,16 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                         </div>
                       )}
 
-                      <div className="absolute top-2 left-2 bg-black/80 px-2 py-0.5 rounded text-[9px] font-mono text-white/70 border border-white/10">
-                        #{pageNum}
-                      </div>
 
                       <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-medium text-xs gap-1">
                         <Eye className="w-4 h-4" /> İncele
                       </div>
                     </div>
 
-                    <div className="p-2.5 bg-[#151515] border-t border-white/10 text-left">
-                      <p className="text-xs font-medium text-white/90 truncate">{meta?.title}</p>
-                      <p className="text-[10px] text-white/40 uppercase tracking-wider truncate font-mono">{meta?.category}</p>
+                    <div className="py-2 px-3 bg-[#151515] border-t border-white/10 text-center">
+                      <span className="text-xs font-mono font-semibold tracking-widest text-white/80">
+                        {pageNum.toString().padStart(2, '0')}
+                      </span>
                     </div>
                   </motion.div>
                 );
