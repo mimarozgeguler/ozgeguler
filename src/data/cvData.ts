@@ -57,7 +57,7 @@ export const cvDataTR: CVData = {
     { name: "Lumion", level: "İleri Seviye", percentage: 90 },
     { name: "Adobe Photoshop", level: "İleri Seviye", percentage: 88 },
     { name: "Microsoft Office", level: "İleri Seviye", percentage: 85 },
-    { name: "3ds Max & Corona Renderer", level: "Temel Seviye", percentage: 60 }
+    { name: "3ds Max & Corona Renderer", level: "Temel Seviye", percentage: 40 }
   ],
   languages: [
     { name: "Türkçe", level: "Ana Dil", percentage: 100 },
@@ -142,7 +142,7 @@ export const cvDataEN: CVData = {
     { name: "Lumion", level: "Advanced", percentage: 90 },
     { name: "Adobe Photoshop", level: "Advanced", percentage: 88 },
     { name: "Microsoft Office", level: "Advanced", percentage: 85 },
-    { name: "3ds Max & Corona Renderer", level: "Basic", percentage: 60 }
+    { name: "3ds Max & Corona Renderer", level: "Basic", percentage: 40 }
   ],
   languages: [
     { name: "Turkish", level: "Native", percentage: 100 },
