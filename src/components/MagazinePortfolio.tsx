@@ -765,39 +765,32 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                 </div>
               )}
 
-              {/* COVER PAGE (Page 1 - High-End Architectural Magazine Mockup) */}
+              {/* COVER PAGE (Page 1) or TWO-PAGE LANDSCAPE SPREAD */}
               {currentPage === 1 ? (
-                <div className="w-full h-full flex items-center justify-center bg-[#0a0a0a] p-3 sm:p-6 relative overflow-hidden">
-                  {/* Outer Desk/Studio Ambient Background */}
-                  <div className="absolute inset-0 bg-radial from-white/5 to-transparent pointer-events-none" />
-                  
-                  {/* Magazine Cover Volume Container */}
-                  <div className="w-full max-w-4xl h-full flex rounded shadow-[12px_16px_40px_rgba(0,0,0,0.9),2px_0_0_#222,4px_0_0_#1a1a1a,6px_0_0_#111] border border-white/15 relative overflow-hidden bg-[#111]">
-                    
-                    {/* Architectural Magazine Spine Binding */}
-                    <div className="w-6 sm:w-10 bg-gradient-to-r from-[#0d0d0d] via-[#242424] to-[#121212] border-r border-white/20 shrink-0 flex flex-col justify-between items-center py-6 text-white/40 text-[8px] sm:text-[10px] font-mono tracking-widest select-none z-20 shadow-xl">
-                      <span className="rotate-90 origin-center whitespace-nowrap uppercase font-bold text-amber-400/90 tracking-[0.2em]">
-                        MİMAR ÖZGE GÜLER
-                      </span>
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400/80 my-auto" />
-                      <span className="rotate-90 origin-center whitespace-nowrap uppercase font-medium text-white/50 tracking-widest">
-                        2025 ARCHITECTURAL PORTFOLIO
-                      </span>
-                    </div>
-
-                    {/* Main Cover Page Render Surface */}
-                    <div className="flex-1 h-full relative overflow-hidden">
-                      {renderSinglePageCard(1, null)}
-
-                      {/* Paper Thickness Shadow Overlay on Right Edge */}
-                      <div className="absolute inset-y-0 right-0 w-3 bg-gradient-to-l from-black/60 to-transparent pointer-events-none z-10" />
-                      {/* Top Spine Crease Highlight */}
-                      <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/50 via-white/10 to-transparent pointer-events-none z-10" />
-                    </div>
-                  </div>
-                </div>
+                /* Cover Page - Render directly filling container without surrounding mock frame */
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.div
+                    key="cover-page-1"
+                    custom={direction}
+                    variants={pageSlideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.2}
+                    onDragEnd={(_e, info) => {
+                      if (info.offset.x < -60 || info.velocity.x < -200) {
+                        if (currentPage < TOTAL_PORTFOLIO_PAGES) nextPage();
+                      }
+                    }}
+                    className="w-full h-full relative overflow-hidden cursor-grab active:cursor-grabbing select-none"
+                  >
+                    {renderSinglePageCard(1, null)}
+                  </motion.div>
+                </AnimatePresence>
               ) : (
-                /* TWO-PAGE LANDSCAPE SPREAD WITH REALISTIC 3D PAGE FLIP & ENHANCED SPINE BULGE (BOMBE) */
+                /* TWO-PAGE LANDSCAPE SPREAD WITH REALISTIC PAGE FLIP & LIGHT SPINE BULGE (BOMBE) */
                 <AnimatePresence mode="wait" custom={direction}>
                   <motion.div
                     key={`spread-${spreadLeft}`}
@@ -816,29 +809,29 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                         if (currentPage > 1) prevPage();
                       }
                     }}
-                    className="w-full h-full flex relative perspective-[1400px] cursor-grab active:cursor-grabbing select-none"
+                    className="w-full h-full flex relative cursor-grab active:cursor-grabbing select-none"
                   >
                     {/* Left Page */}
-                    <div className="w-1/2 h-full relative overflow-hidden border-r border-white/10 bg-[#121212]">
+                    <div className="w-1/2 h-full relative overflow-hidden border-r border-white/10">
                       {renderSinglePageCard(spreadLeft, false)}
-                      {/* Left page inner spine pronounced 3D paper curvature (bombe) */}
-                      <div className="absolute inset-y-0 right-0 w-20 sm:w-28 bg-gradient-to-l from-black/70 via-white/15 to-transparent pointer-events-none z-20" />
+                      {/* Left page inner spine soft light paper curvature (bombe) */}
+                      <div className="absolute inset-y-0 right-0 w-16 sm:w-24 bg-gradient-to-l from-white/20 via-white/5 to-transparent pointer-events-none z-20" />
                     </div>
 
-                    {/* Central Magazine Spine Crease & Pronounced 3D Arch / Bulge (Ortadaki Dergi Bombesi) */}
-                    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 sm:w-28 pointer-events-none z-30 flex items-center justify-center">
-                      {/* Left side soft paper bulge highlight & shadow */}
-                      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/15 to-black/60" />
-                      {/* Center binding crease line - elegant silver/gold accent */}
-                      <div className="w-[2px] h-full bg-white/70 shadow-[0_0_12px_rgba(255,255,255,0.7)] relative z-10" />
-                      {/* Right side soft paper bulge highlight & shadow */}
-                      <div className="w-1/2 h-full bg-gradient-to-r from-black/60 via-white/15 to-transparent" />
+                    {/* Central Magazine Spine Crease & Light 3D Paper Arch / Bulge (Ortadaki Dergi Bombesi) */}
+                    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-12 sm:w-20 pointer-events-none z-30 flex items-center justify-center">
+                      {/* Left side soft light paper reflection */}
+                      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-white/35" />
+                      {/* Center binding crease line */}
+                      <div className="w-[1px] h-full bg-white/60 shadow-[0_0_10px_rgba(255,255,255,0.6)] relative z-10" />
+                      {/* Right side soft light paper reflection */}
+                      <div className="w-1/2 h-full bg-gradient-to-r from-white/35 via-white/20 to-transparent" />
                     </div>
 
                     {/* Right Page */}
-                    <div className="w-1/2 h-full relative overflow-hidden border-l border-white/10 bg-[#121212]">
-                      {/* Right page inner spine pronounced 3D paper curvature (bombe) */}
-                      <div className="absolute inset-y-0 left-0 w-20 sm:w-28 bg-gradient-to-r from-black/70 via-white/15 to-transparent pointer-events-none z-20" />
+                    <div className="w-1/2 h-full relative overflow-hidden border-l border-white/10">
+                      {/* Right page inner spine soft light paper curvature (bombe) */}
+                      <div className="absolute inset-y-0 left-0 w-16 sm:w-24 bg-gradient-to-r from-white/20 via-white/5 to-transparent pointer-events-none z-20" />
                       {spreadRight ? (
                         renderSinglePageCard(spreadRight, true)
                       ) : (

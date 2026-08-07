@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Mail, Phone, Linkedin, MapPin, BookOpen, FileText, Calendar, Compass, Globe } from 'lucide-react';
+import { Mail, Phone, Linkedin, MapPin, BookOpen, FileText, Calendar, Compass, Globe, FolderKanban } from 'lucide-react';
 import { cvDataTR, cvDataEN } from '../data/cvData';
 import { DEFAULT_AVATAR } from '../data/profilePhoto';
 import { getProfilePhotoCandidates } from '../utils/imageResolver';
 
 interface HeaderProps {
-  activeTab: 'portfolio' | 'cv';
-  setActiveTab: (tab: 'portfolio' | 'cv') => void;
+  activeTab: 'portfolio' | 'projects' | 'cv';
+  setActiveTab: (tab: 'portfolio' | 'projects' | 'cv') => void;
   lang: 'tr' | 'en';
   setLang: (lang: 'tr' | 'en') => void;
 }
@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
             <nav className="flex items-center bg-[#151515] p-1 rounded-full border border-white/10">
               <button
                 onClick={() => setActiveTab('portfolio')}
-                className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
+                className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
                   activeTab === 'portfolio'
                     ? 'bg-white text-black font-semibold shadow'
                     : 'text-white/50 hover:text-white hover:bg-white/5'
@@ -121,8 +121,20 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               <button
+                onClick={() => setActiveTab('projects')}
+                className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
+                  activeTab === 'projects'
+                    ? 'bg-white text-black font-semibold shadow'
+                    : 'text-white/50 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <FolderKanban className="w-3.5 h-3.5" />
+                <span>{lang === 'tr' ? 'Projeler' : 'Projects'}</span>
+              </button>
+
+              <button
                 onClick={() => setActiveTab('cv')}
-                className={`flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
+                className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all duration-200 ${
                   activeTab === 'cv'
                     ? 'bg-white text-black font-semibold shadow'
                     : 'text-white/50 hover:text-white hover:bg-white/5'

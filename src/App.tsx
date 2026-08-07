@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { MagazinePortfolio } from './components/MagazinePortfolio';
 import { CVSection } from './components/CVSection';
+import { ProjectsSection } from './components/ProjectsSection';
 import { generatePortfolioPages } from './data/portfolioConfig';
 import { Compass, Mail, Phone, Linkedin } from 'lucide-react';
 import { loadAllPageImagesFromDB, savePageImageToDB } from './utils/indexedDBStorage';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'portfolio' | 'cv'>('portfolio');
+  const [activeTab, setActiveTab] = useState<'portfolio' | 'projects' | 'cv'>('portfolio');
   const [lang, setLang] = useState<'tr' | 'en'>('tr');
   const [uploadedImages, setUploadedImages] = useState<Record<number, string>>({});
 
@@ -63,6 +64,8 @@ export default function App() {
             onSingleUpload={handleSingleUpload}
             lang={lang}
           />
+        ) : activeTab === 'projects' ? (
+          <ProjectsSection lang={lang} />
         ) : (
           <CVSection
             lang={lang}
