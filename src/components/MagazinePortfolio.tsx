@@ -257,11 +257,11 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
     });
   }, [currentPage, uploadedImages, failedImages, pageCandidateIndex]);
 
-  // Animation Variants for Digital Magazine Page Folding & Flipping Transitions
+  // Animation Variants for 3D Digital Magazine Page Folding & Flipping Transitions
   const pageSlideVariants = {
     enter: (dir: number) => ({
-      x: dir > 0 ? '30%' : '-30%',
-      rotateY: dir > 0 ? -35 : 35,
+      x: dir > 0 ? '25%' : '-25%',
+      rotateY: dir > 0 ? 48 : -48,
       opacity: 0,
       scale: 0.95,
     }),
@@ -271,20 +271,20 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: 'spring', stiffness: 280, damping: 30 },
-        rotateY: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
+        x: { type: 'spring', stiffness: 260, damping: 28 },
+        rotateY: { duration: 0.48, ease: [0.18, 1, 0.3, 1] },
         opacity: { duration: 0.28 },
         scale: { duration: 0.35 },
       },
     },
     exit: (dir: number) => ({
-      x: dir < 0 ? '30%' : '-30%',
-      rotateY: dir < 0 ? -35 : 35,
+      x: dir < 0 ? '25%' : '-25%',
+      rotateY: dir < 0 ? 48 : -48,
       opacity: 0,
       scale: 0.95,
       transition: {
-        x: { type: 'spring', stiffness: 280, damping: 30 },
-        rotateY: { duration: 0.38, ease: [0.22, 1, 0.36, 1] },
+        x: { type: 'spring', stiffness: 260, damping: 28 },
+        rotateY: { duration: 0.42, ease: [0.18, 1, 0.3, 1] },
         opacity: { duration: 0.22 },
         scale: { duration: 0.28 },
       },
@@ -744,37 +744,35 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                 zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : 'cursor-grab active:cursor-grabbing'
               }`}
             >
-              {/* Interactive Right Corner Page Peel / Drag Handle */}
+              {/* Interactive Right Edge Page Turn Zone (Sade El İşareti & Köşe Katlama) */}
               {currentPage < TOTAL_PORTFOLIO_PAGES && zoomLevel === 1 && (
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                     nextPage();
                   }}
-                  className="absolute top-0 right-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-end select-none"
-                  title="Sayfayı Tut / Tıkla ve Çevir"
+                  className="absolute top-0 right-0 w-20 sm:w-28 h-full z-40 cursor-pointer group/edge flex items-end justify-end p-3 select-none"
+                  title="Sonraki Sayfa"
                 >
-                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-l-[48px] border-l-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:-translate-x-1 group-hover/curl:translate-y-1" />
-                  <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
-                    ÇEVİR
-                  </span>
+                  <div className="w-7 h-7 opacity-30 group-hover/edge:opacity-100 transition-all duration-300 relative pointer-events-none">
+                    <div className="w-0 h-0 border-b-[20px] border-b-white/90 border-l-[20px] border-l-transparent drop-shadow-md transition-transform duration-300 group-hover/edge:scale-125 group-hover/edge:-translate-x-1 group-hover/edge:-translate-y-1" />
+                  </div>
                 </div>
               )}
 
-              {/* Interactive Left Corner Page Peel / Drag Handle */}
+              {/* Interactive Left Edge Page Turn Zone (Sade El İşareti & Köşe Katlama) */}
               {currentPage > 1 && zoomLevel === 1 && (
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                     prevPage();
                   }}
-                  className="absolute top-0 left-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-start select-none"
-                  title="Önceki Sayfaya Dön"
+                  className="absolute top-0 left-0 w-20 sm:w-28 h-full z-40 cursor-pointer group/edge flex items-end justify-start p-3 select-none"
+                  title="Önceki Sayfa"
                 >
-                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-r-[48px] border-r-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:translate-x-1 group-hover/curl:translate-y-1" />
-                  <span className="absolute top-1.5 left-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
-                    GERİ
-                  </span>
+                  <div className="w-7 h-7 opacity-30 group-hover/edge:opacity-100 transition-all duration-300 relative pointer-events-none">
+                    <div className="w-0 h-0 border-b-[20px] border-b-white/90 border-r-[20px] border-r-transparent drop-shadow-md transition-transform duration-300 group-hover/edge:scale-125 group-hover/edge:translate-x-1 group-hover/edge:-translate-y-1" />
+                  </div>
                 </div>
               )}
 
@@ -798,28 +796,26 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                     className="w-full h-full flex relative"
                   >
                     {/* Left Page */}
-                    <div className="w-1/2 h-full relative overflow-hidden border-r border-black/40">
+                    <div className="w-1/2 h-full relative overflow-hidden border-r border-white/10">
                       {renderSinglePageCard(spreadLeft, false)}
-                      {/* Left page inner spine shadow for 3D paper curvature (bombe) */}
-                      <div className="absolute inset-y-0 right-0 w-12 sm:w-20 bg-gradient-to-l from-black/70 via-black/25 to-transparent pointer-events-none z-20" />
+                      {/* Left page inner spine soft light paper curvature */}
+                      <div className="absolute inset-y-0 right-0 w-12 sm:w-16 bg-gradient-to-l from-white/15 via-black/10 to-transparent pointer-events-none z-20" />
                     </div>
 
-                    {/* Central Magazine Spine Crease & Bulge Shadow (Dergi Omurgası Bombe Efekti) */}
-                    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 sm:w-24 pointer-events-none z-30 flex items-center justify-center">
-                      {/* Left side bulge shadow */}
-                      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-black/20 to-black/80" />
-                      {/* Center binding line */}
-                      <div className="w-[2px] h-full bg-black/95 shadow-[0_0_10px_rgba(0,0,0,0.9)] relative z-10">
-                        <div className="absolute inset-y-0 -left-[1px] w-[1px] bg-white/15" />
-                      </div>
-                      {/* Right side bulge shadow */}
-                      <div className="w-1/2 h-full bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+                    {/* Central Magazine Spine Crease & Soft Light Bulge (Açık Tonlu Dergi Omurgası & Bombe) */}
+                    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-12 sm:w-20 pointer-events-none z-30 flex items-center justify-center">
+                      {/* Left side soft light reflection */}
+                      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-white/25" />
+                      {/* Center crease line - light subtle accent */}
+                      <div className="w-[1px] h-full bg-white/50 shadow-[0_0_8px_rgba(255,255,255,0.4)] relative z-10" />
+                      {/* Right side soft light reflection */}
+                      <div className="w-1/2 h-full bg-gradient-to-r from-white/25 via-white/10 to-transparent" />
                     </div>
 
                     {/* Right Page */}
-                    <div className="w-1/2 h-full relative overflow-hidden border-l border-black/40">
-                      {/* Right page inner spine shadow for 3D paper curvature (bombe) */}
-                      <div className="absolute inset-y-0 left-0 w-12 sm:w-20 bg-gradient-to-r from-black/70 via-black/25 to-transparent pointer-events-none z-20" />
+                    <div className="w-1/2 h-full relative overflow-hidden border-l border-white/10">
+                      {/* Right page inner spine soft light paper curvature */}
+                      <div className="absolute inset-y-0 left-0 w-12 sm:w-16 bg-gradient-to-r from-white/15 via-black/10 to-transparent pointer-events-none z-20" />
                       {spreadRight ? (
                         renderSinglePageCard(spreadRight, true)
                       ) : (
@@ -893,37 +889,35 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                 zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : 'cursor-grab active:cursor-grabbing'
               }`}
             >
-              {/* Interactive Right Corner Page Peel / Drag Handle */}
+              {/* Interactive Right Edge Page Turn Zone (Sade El İşareti & Köşe Katlama) */}
               {currentPage < TOTAL_PORTFOLIO_PAGES && zoomLevel === 1 && (
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                     nextPage();
                   }}
-                  className="absolute top-0 right-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-end select-none"
-                  title="Sayfayı Tut / Tıkla ve Çevir"
+                  className="absolute top-0 right-0 w-20 sm:w-28 h-full z-40 cursor-pointer group/edge flex items-end justify-end p-3 select-none"
+                  title="Sonraki Sayfa"
                 >
-                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-l-[48px] border-l-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:-translate-x-1 group-hover/curl:translate-y-1" />
-                  <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
-                    ÇEVİR
-                  </span>
+                  <div className="w-7 h-7 opacity-30 group-hover/edge:opacity-100 transition-all duration-300 relative pointer-events-none">
+                    <div className="w-0 h-0 border-b-[20px] border-b-white/90 border-l-[20px] border-l-transparent drop-shadow-md transition-transform duration-300 group-hover/edge:scale-125 group-hover/edge:-translate-x-1 group-hover/edge:-translate-y-1" />
+                  </div>
                 </div>
               )}
 
-              {/* Interactive Left Corner Page Peel / Drag Handle */}
+              {/* Interactive Left Edge Page Turn Zone (Sade El İşareti & Köşe Katlama) */}
               {currentPage > 1 && zoomLevel === 1 && (
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                     prevPage();
                   }}
-                  className="absolute top-0 left-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-start select-none"
-                  title="Önceki Sayfaya Dön"
+                  className="absolute top-0 left-0 w-20 sm:w-28 h-full z-40 cursor-pointer group/edge flex items-end justify-start p-3 select-none"
+                  title="Önceki Sayfa"
                 >
-                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-r-[48px] border-r-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:translate-x-1 group-hover/curl:translate-y-1" />
-                  <span className="absolute top-1.5 left-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
-                    GERİ
-                  </span>
+                  <div className="w-7 h-7 opacity-30 group-hover/edge:opacity-100 transition-all duration-300 relative pointer-events-none">
+                    <div className="w-0 h-0 border-b-[20px] border-b-white/90 border-r-[20px] border-r-transparent drop-shadow-md transition-transform duration-300 group-hover/edge:scale-125 group-hover/edge:translate-x-1 group-hover/edge:-translate-y-1" />
+                  </div>
                 </div>
               )}
               <AnimatePresence mode="wait" custom={direction}>
