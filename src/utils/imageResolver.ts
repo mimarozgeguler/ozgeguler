@@ -1,16 +1,14 @@
 // Utility to resolve public images with automatic file system scanning and fallbacks
 
 export const getPublicFilenames = (): string[] => {
-  try {
-    // Vite eager glob import for files in public directory
-    const rawPublicFiles = import.meta.glob('/public/*', { eager: true });
-    return Object.keys(rawPublicFiles).map((path) => {
-      // path is like "/public/portfolio01.jpg" or "/public/VESİKA.png"
-      return path.replace(/^\/public\//, '');
-    });
-  } catch {
-    return [];
-  }
+  return [
+    'VESİKA.png',
+    'portfolio01.jpg', 'portfolio02.jpg', 'portfolio03.jpg', 'portfolio04.jpg', 'portfolio05.jpg',
+    'portfolio06.jpg', 'portfolio07.jpg', 'portfolio08.jpg', 'portfolio09.jpg', 'portfolio10.jpg',
+    'portfolio11.jpg', 'portfolio12.jpg', 'portfolio13.jpg', 'portfolio14.jpg', 'portfolio15.jpg',
+    'portfolio16.jpg', 'portfolio17.jpg', 'portfolio18.jpg', 'portfolio19.jpg', 'portfolio20.jpg',
+    'portfolio21.jpg', 'portfolio22.jpg', 'portfolio23.jpg', 'portfolio24.jpg', 'portfolio25.jpg'
+  ];
 };
 
 export const findPageImageInPublic = (pageNum: number): string | null => {

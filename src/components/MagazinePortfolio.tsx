@@ -156,6 +156,15 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
+  // Preload all portfolio page images into browser cache for instantaneous loading
+  useEffect(() => {
+    for (let i = 1; i <= TOTAL_PORTFOLIO_PAGES; i++) {
+      const padded = i.toString().padStart(2, '0');
+      const img = new Image();
+      img.src = `/portfolio${padded}.jpg`;
+    }
+  }, []);
+
   // Page Turn Handlers
   const nextPage = () => {
     setDirection(1);
@@ -339,26 +348,6 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
               className={`w-full h-full object-contain ${imgAlignment} pointer-events-none`}
               loading="eager"
             />
-            
-            {/* Overlay Button to change image on hover */}
-            <label
-              className="absolute top-3 right-3 opacity-0 group-hover/card:opacity-100 transition-opacity bg-black/80 hover:bg-black backdrop-blur border border-white/20 text-white text-[10px] font-mono px-2.5 py-1.5 rounded-md cursor-pointer flex items-center gap-1.5 shadow-xl z-20"
-              title={lang === 'tr' ? 'Bu sayfa görselini değiştir' : 'Change page image'}
-            >
-              <Upload className="w-3 h-3 text-white/80" />
-              <span>{lang === 'tr' ? 'Görseli Değiştir' : 'Change Image'}</span>
-              <input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => {
-                  if (e.target.files && e.target.files[0]) {
-                    onSingleUpload?.(pageNum, e.target.files[0]);
-                    resetSinglePage(pageNum);
-                  }
-                }}
-              />
-            </label>
           </div>
         ) : (
           /* Explicit Error Card / Notice when Public Image Fails to Load */
