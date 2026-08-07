@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] tracking-[0.25em] uppercase font-light text-white/50 italic border border-white/10 px-2.5 py-0.5 rounded-full bg-white/5">
-                  {lang === 'tr' ? 'Mimar / Architect' : 'Architect / Mimar'}
+                  {lang === 'tr' ? 'Mimar' : 'Architect'}
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif italic tracking-wide text-white mt-1 leading-tight">

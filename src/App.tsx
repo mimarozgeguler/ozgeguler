@@ -81,7 +81,7 @@ export default function App() {
             <span className="font-serif italic text-white tracking-wide">ÖZLEM ÖZGE GÜLER</span>
             <span className="text-white/20">•</span>
             <span className="text-white/40 uppercase tracking-widest text-[10px] font-mono">
-              {lang === 'tr' ? 'Mimar / Architect Portfolyo & CV' : 'Architect Portfolio & Resume'}
+              {lang === 'tr' ? 'Mimari Portfolyo & Özgeçmiş' : 'Architectural Portfolio & Resume'}
             </span>
           </div>
 
