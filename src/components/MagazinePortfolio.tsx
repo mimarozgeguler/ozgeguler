@@ -727,14 +727,14 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                       top: -Math.max(0, (zoomLevel - 1) * 450),
                       bottom: Math.max(0, (zoomLevel - 1) * 450),
                     }
-                  : { left: -100, right: 100 }
+                  : { left: -450, right: 450 }
               }
-              dragElastic={zoomLevel > 1 ? 0.06 : 0.15}
+              dragElastic={zoomLevel > 1 ? 0.06 : 0.3}
               onDragEnd={(_e, info) => {
                 if (zoomLevel > 1) return;
-                if (info.offset.x < -60 || info.velocity.x < -200) {
+                if (info.offset.x < -50 || info.velocity.x < -150) {
                   if (currentPage < TOTAL_PORTFOLIO_PAGES) nextPage();
-                } else if (info.offset.x > 60 || info.velocity.x > 200) {
+                } else if (info.offset.x > 50 || info.velocity.x > 150) {
                   if (currentPage > 1) prevPage();
                 }
               }}
@@ -873,14 +873,14 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                       top: -Math.max(0, (zoomLevel - 1) * 400),
                       bottom: Math.max(0, (zoomLevel - 1) * 400),
                     }
-                  : { left: -100, right: 100 }
+                  : { left: -450, right: 450 }
               }
-              dragElastic={zoomLevel > 1 ? 0.06 : 0.15}
+              dragElastic={zoomLevel > 1 ? 0.06 : 0.3}
               onDragEnd={(_e, info) => {
                 if (zoomLevel > 1) return;
-                if (info.offset.x < -60 || info.velocity.x < -200) {
+                if (info.offset.x < -50 || info.velocity.x < -150) {
                   if (currentPage < TOTAL_PORTFOLIO_PAGES) nextPage();
-                } else if (info.offset.x > 60 || info.velocity.x > 200) {
+                } else if (info.offset.x > 50 || info.velocity.x > 150) {
                   if (currentPage > 1) prevPage();
                 }
               }}
