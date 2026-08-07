@@ -336,7 +336,7 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
               src={src}
               alt={`Portfolyo Sayfa ${pageNum}`}
               onError={() => handleImageError(pageNum)}
-              className={`w-full h-full object-contain ${imgAlignment} pointer-events-none`}
+              className="w-full h-full object-cover object-center pointer-events-none"
               loading="eager"
             />
             
@@ -812,26 +812,19 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                     className="w-full h-full flex relative cursor-grab active:cursor-grabbing select-none"
                   >
                     {/* Left Page */}
-                    <div className="w-1/2 h-full relative overflow-hidden border-r border-white/10">
+                    <div className="w-1/2 h-full relative overflow-hidden">
                       {renderSinglePageCard(spreadLeft, false)}
-                      {/* Left page inner spine soft light paper curvature (bombe) */}
-                      <div className="absolute inset-y-0 right-0 w-16 sm:w-24 bg-gradient-to-l from-white/20 via-white/5 to-transparent pointer-events-none z-20" />
+                      {/* Left page inner shadow at book spine crease */}
+                      <div className="absolute inset-y-0 right-0 w-8 sm:w-14 bg-gradient-to-l from-black/30 via-black/10 to-transparent pointer-events-none z-20" />
                     </div>
 
-                    {/* Central Magazine Spine Crease & Light 3D Paper Arch / Bulge (Ortadaki Dergi Bombesi) */}
-                    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-12 sm:w-20 pointer-events-none z-30 flex items-center justify-center">
-                      {/* Left side soft light paper reflection */}
-                      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-white/35" />
-                      {/* Center binding crease line */}
-                      <div className="w-[1px] h-full bg-white/60 shadow-[0_0_10px_rgba(255,255,255,0.6)] relative z-10" />
-                      {/* Right side soft light paper reflection */}
-                      <div className="w-1/2 h-full bg-gradient-to-r from-white/35 via-white/20 to-transparent" />
-                    </div>
+                    {/* Central Book Spine Crease Line (Sayfa Birleşim Yeri) */}
+                    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px] bg-black/50 shadow-[0_0_8px_rgba(0,0,0,0.5)] pointer-events-none z-30" />
 
                     {/* Right Page */}
-                    <div className="w-1/2 h-full relative overflow-hidden border-l border-white/10">
-                      {/* Right page inner spine soft light paper curvature (bombe) */}
-                      <div className="absolute inset-y-0 left-0 w-16 sm:w-24 bg-gradient-to-r from-white/20 via-white/5 to-transparent pointer-events-none z-20" />
+                    <div className="w-1/2 h-full relative overflow-hidden">
+                      {/* Right page inner shadow at book spine crease */}
+                      <div className="absolute inset-y-0 left-0 w-8 sm:w-14 bg-gradient-to-r from-black/30 via-black/10 to-transparent pointer-events-none z-20" />
                       {spreadRight ? (
                         renderSinglePageCard(spreadRight, true)
                       ) : (
