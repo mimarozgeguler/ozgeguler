@@ -717,20 +717,67 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
 
             <motion.div
               layout
-              drag={zoomLevel > 1}
-              dragConstraints={{
-                left: -Math.max(0, (zoomLevel - 1) * 700),
-                right: Math.max(0, (zoomLevel - 1) * 700),
-                top: -Math.max(0, (zoomLevel - 1) * 450),
-                bottom: Math.max(0, (zoomLevel - 1) * 450),
+              drag={zoomLevel > 1 ? true : "x"}
+              dragSnapToOrigin={zoomLevel === 1}
+              dragConstraints={
+                zoomLevel > 1
+                  ? {
+                      left: -Math.max(0, (zoomLevel - 1) * 700),
+                      right: Math.max(0, (zoomLevel - 1) * 700),
+                      top: -Math.max(0, (zoomLevel - 1) * 450),
+                      bottom: Math.max(0, (zoomLevel - 1) * 450),
+                    }
+                  : { left: -100, right: 100 }
+              }
+              dragElastic={zoomLevel > 1 ? 0.06 : 0.15}
+              onDragEnd={(_e, info) => {
+                if (zoomLevel > 1) return;
+                if (info.offset.x < -60 || info.velocity.x < -200) {
+                  if (currentPage < TOTAL_PORTFOLIO_PAGES) nextPage();
+                } else if (info.offset.x > 60 || info.velocity.x > 200) {
+                  if (currentPage > 1) prevPage();
+                }
               }}
-              dragElastic={0.06}
               style={{ scale: zoomLevel }}
               transition={{ type: 'spring', stiffness: 200, damping: 25 }}
               className={`relative max-w-6xl xl:max-w-7xl w-full aspect-[16/5] sm:aspect-[3.2/1] bg-[#151515] rounded-sm border border-white/10 shadow-2xl shadow-black flex overflow-hidden ring-1 ring-white/5 ${
-                zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : ''
+                zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : 'cursor-grab active:cursor-grabbing'
               }`}
             >
+              {/* Interactive Right Corner Page Peel / Drag Handle */}
+              {currentPage < TOTAL_PORTFOLIO_PAGES && zoomLevel === 1 && (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextPage();
+                  }}
+                  className="absolute top-0 right-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-end select-none"
+                  title="Sayfayı Tut / Tıkla ve Çevir"
+                >
+                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-l-[48px] border-l-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:-translate-x-1 group-hover/curl:translate-y-1" />
+                  <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
+                    ÇEVİR
+                  </span>
+                </div>
+              )}
+
+              {/* Interactive Left Corner Page Peel / Drag Handle */}
+              {currentPage > 1 && zoomLevel === 1 && (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevPage();
+                  }}
+                  className="absolute top-0 left-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-start select-none"
+                  title="Önceki Sayfaya Dön"
+                >
+                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-r-[48px] border-r-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:translate-x-1 group-hover/curl:translate-y-1" />
+                  <span className="absolute top-1.5 left-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
+                    GERİ
+                  </span>
+                </div>
+              )}
+
               {/* COVER PAGE (Page 1 rendered centered/single landscape in spread mode) */}
               {currentPage === 1 ? (
                 <div className="w-full h-full flex items-center justify-center bg-[#0A0A0A] p-2 sm:p-4">
@@ -748,15 +795,31 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="w-full h-full flex"
+                    className="w-full h-full flex relative"
                   >
                     {/* Left Page */}
-                    <div className="w-1/2 h-full relative">
+                    <div className="w-1/2 h-full relative overflow-hidden border-r border-black/40">
                       {renderSinglePageCard(spreadLeft, false)}
+                      {/* Left page inner spine shadow for 3D paper curvature (bombe) */}
+                      <div className="absolute inset-y-0 right-0 w-12 sm:w-20 bg-gradient-to-l from-black/70 via-black/25 to-transparent pointer-events-none z-20" />
+                    </div>
+
+                    {/* Central Magazine Spine Crease & Bulge Shadow (Dergi Omurgası Bombe Efekti) */}
+                    <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 sm:w-24 pointer-events-none z-30 flex items-center justify-center">
+                      {/* Left side bulge shadow */}
+                      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-black/20 to-black/80" />
+                      {/* Center binding line */}
+                      <div className="w-[2px] h-full bg-black/95 shadow-[0_0_10px_rgba(0,0,0,0.9)] relative z-10">
+                        <div className="absolute inset-y-0 -left-[1px] w-[1px] bg-white/15" />
+                      </div>
+                      {/* Right side bulge shadow */}
+                      <div className="w-1/2 h-full bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
                     </div>
 
                     {/* Right Page */}
-                    <div className="w-1/2 h-full relative">
+                    <div className="w-1/2 h-full relative overflow-hidden border-l border-black/40">
+                      {/* Right page inner spine shadow for 3D paper curvature (bombe) */}
+                      <div className="absolute inset-y-0 left-0 w-12 sm:w-20 bg-gradient-to-r from-black/70 via-black/25 to-transparent pointer-events-none z-20" />
                       {spreadRight ? (
                         renderSinglePageCard(spreadRight, true)
                       ) : (
@@ -804,19 +867,65 @@ export const MagazinePortfolio: React.FC<MagazinePortfolioProps> = ({
 
             <motion.div
               layout
-              drag={zoomLevel > 1}
-              dragConstraints={{
-                left: -Math.max(0, (zoomLevel - 1) * 600),
-                right: Math.max(0, (zoomLevel - 1) * 600),
-                top: -Math.max(0, (zoomLevel - 1) * 400),
-                bottom: Math.max(0, (zoomLevel - 1) * 400),
+              drag={zoomLevel > 1 ? true : "x"}
+              dragSnapToOrigin={zoomLevel === 1}
+              dragConstraints={
+                zoomLevel > 1
+                  ? {
+                      left: -Math.max(0, (zoomLevel - 1) * 600),
+                      right: Math.max(0, (zoomLevel - 1) * 600),
+                      top: -Math.max(0, (zoomLevel - 1) * 400),
+                      bottom: Math.max(0, (zoomLevel - 1) * 400),
+                    }
+                  : { left: -100, right: 100 }
+              }
+              dragElastic={zoomLevel > 1 ? 0.06 : 0.15}
+              onDragEnd={(_e, info) => {
+                if (zoomLevel > 1) return;
+                if (info.offset.x < -60 || info.velocity.x < -200) {
+                  if (currentPage < TOTAL_PORTFOLIO_PAGES) nextPage();
+                } else if (info.offset.x > 60 || info.velocity.x > 200) {
+                  if (currentPage > 1) prevPage();
+                }
               }}
-              dragElastic={0.06}
               style={{ scale: zoomLevel }}
               className={`relative max-w-5xl w-full aspect-[16/10] bg-[#151515] rounded-sm border border-white/10 shadow-2xl shadow-black overflow-hidden ring-1 ring-white/5 ${
-                zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : ''
+                zoomLevel > 1 ? 'cursor-grab active:cursor-grabbing' : 'cursor-grab active:cursor-grabbing'
               }`}
             >
+              {/* Interactive Right Corner Page Peel / Drag Handle */}
+              {currentPage < TOTAL_PORTFOLIO_PAGES && zoomLevel === 1 && (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextPage();
+                  }}
+                  className="absolute top-0 right-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-end select-none"
+                  title="Sayfayı Tut / Tıkla ve Çevir"
+                >
+                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-l-[48px] border-l-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:-translate-x-1 group-hover/curl:translate-y-1" />
+                  <span className="absolute top-1.5 right-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
+                    ÇEVİR
+                  </span>
+                </div>
+              )}
+
+              {/* Interactive Left Corner Page Peel / Drag Handle */}
+              {currentPage > 1 && zoomLevel === 1 && (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevPage();
+                  }}
+                  className="absolute top-0 left-0 w-16 h-16 z-40 group/curl cursor-pointer flex items-start justify-start select-none"
+                  title="Önceki Sayfaya Dön"
+                >
+                  <div className="w-0 h-0 border-t-[48px] border-t-amber-500/90 border-r-[48px] border-r-transparent drop-shadow-xl transition-transform duration-300 group-hover/curl:scale-110 group-hover/curl:translate-x-1 group-hover/curl:translate-y-1" />
+                  <span className="absolute top-1.5 left-1.5 text-[8px] font-mono text-black font-extrabold uppercase pointer-events-none tracking-tighter">
+                    GERİ
+                  </span>
+                </div>
+              )}
               <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
                   key={`page-${currentPage}`}
